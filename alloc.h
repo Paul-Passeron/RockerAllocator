@@ -33,6 +33,9 @@ void end_scope(alloc_stack_t* alloc);
 void* allocate(alloc_stack_t* alloc, size_t size);
 void* allocate_persistent(alloc_stack_t* alloc, size_t size);
 
+void* reallocate(alloc_stack_t* alloc, void* ptr, size_t size);
+void* reallocate_persistent(alloc_stack_t* alloc, void* ptr, size_t size);
+
 void init_compiler_stack(void);
 
 void kill_compiler_stack(void);
@@ -44,5 +47,9 @@ void end_compiler_scope(void);
 void* allocate_compiler(size_t size);
 
 void* allocate_compiler_persistent(size_t size);
+
+void* reallocate_compiler(void* ptr, size_t size);
+
+void* reallocate_compiler_persistent(void* ptr, size_t size);
 
 #endif  // ALLOC_H

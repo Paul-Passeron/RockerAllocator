@@ -1,5 +1,6 @@
 #include "alloc.h"
 #include <stdio.h>
+#include <stdlib.h>
 #define INIT_CAP_ALLOC_STACK 1024
 void init_stack(alloc_stack_t* alloc) {
   alloc->capacity = INIT_CAP_ALLOC_STACK;
@@ -75,6 +76,30 @@ void* allocate_persistent(alloc_stack_t* alloc, size_t size) {
   return ptr;
 }
 
+void* reallocate(alloc_stack_t* alloc, void* ptr, size_t size) {
+  void* res = realloc(ptr, size);
+  for (int i = 0; i < alloc->length; i++) {
+    void* test = alloc->data[i].ptr;
+    if (test == ptr) {
+      alloc->data[i].ptr = res;
+      break;
+    }
+  }
+  return res;
+}
+
+void* reallocate_persistent(alloc_stack_t* alloc, void* ptr, size_t size) {
+  void* res = realloc(ptr, size);
+  for (int i = 0; i < alloc->length_p; i++) {
+    void* test = alloc->persistents[i];
+    if (test == ptr) {
+      alloc->persistents[i] = res;
+      break;
+    }
+  }
+  return res;
+}
+
 alloc_stack_t global;
 
 void init_compiler_stack(void) {
@@ -99,4 +124,12 @@ void* allocate_compiler(size_t size) {
 
 void* allocate_compiler_persistent(size_t size) {
   return allocate_persistent(&global, size);
+}
+
+void* reallocate_compiler(void* ptr, size_t size) {
+  return reallocate(&global, ptr, size);
+}
+
+void* reallocate_compiler_persistent(void* ptr, size_t size) {
+  return reallocate_persistent(&global, ptr, size);
 }
