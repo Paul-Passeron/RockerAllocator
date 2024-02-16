@@ -1,6 +1,6 @@
 # Rocker Allocator in C
 
-Simple stb-style single header libc malloc wrapper for transpiled langage [Rocker](https://github.com/Paul-Passeron/Rocker.git).
+Simple libc malloc wrapper for transpiled langage [Rocker](https://github.com/Paul-Passeron/Rocker.git).
 
 Keeps track of allocated pointers and has a scope system which handles the freeing of memory
 
@@ -35,3 +35,8 @@ You still can allocate global memory with the function ```allocate_persistent```
 This memory will only be freed when the allocator stack is killed
 
 If only this system is used for dynamic memory management, memory leaks and double frees are not possible (and the stack is not modified by anything else but the available functions in the header)
+
+
+## Two goals:
+- Will be used by the transpiled program to simulate a garbage collector
+- Is directly used by the transpiler to make memory management easier (mallocs are replaced by allocate_compiler_persistent)
