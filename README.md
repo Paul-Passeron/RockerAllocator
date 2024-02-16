@@ -1,6 +1,6 @@
 # Rocker Allocator in C
 
-Simple stb-style single header libc malloc wrapper for transpiled langage 'Rocker'.
+Simple stb-style single header libc malloc wrapper for transpiled langage [Rocker](https://github.com/Paul-Passeron/Rocker.git).
 
 Keeps track of allocated pointers and has a scope system which handles the freeing of memory
 
