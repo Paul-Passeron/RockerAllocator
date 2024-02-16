@@ -4,7 +4,7 @@ Simple stb-style single header libc malloc wrapper for transpiled langage 'Rocke
 
 Keeps track of allocated pointers and has a scope system which handles the freeing of memory
 
-If you only care about the interface, you xan just include the file as is but if you want to include the function definitions as well, you must define ```ROCKER_ALLOC_IMPLEMENTATION``` before including the header.
+If you only care about the interface, you can just include the file as is but if you want to include the function definitions as well, you must define ```ROCKER_ALLOC_IMPLEMENTATION``` before including the header.
 
 
 example:
