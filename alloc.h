@@ -33,10 +33,26 @@ void end_scope(alloc_stack_t *alloc);
 void *allocate(alloc_stack_t *alloc, size_t size);
 void *allocate_persistent(alloc_stack_t *alloc, size_t size);
 
+#ifdef COMPILER_GLOBAL
+alloc_stack_t global;
+void init_compiler_stack(void) { init_stack(&global); }
+
+void kill_compiler_stack(void) { kill_stack(global); }
+
+void new_compiler_scope(void) { new_scope(&global); }
+
+void end_compiler_scope(void) { end_scope(&global); }
+
+void *allocate_compiler(size_t size) { return allocate(&global, size); }
+
+void *allocate_compiler_persistent(size_t size) { return allocate_persistent(&global, size); }
+
+#endif
+
 #ifdef ROCKER_ALLOC_IMPLEMENTATION
-
+#ifndef INIT_CAP_ALLOC_STACK
 #define INIT_CAP_ALLOC_STACK 1024
-
+#endif
 void init_stack(alloc_stack_t *alloc) {
   alloc->capacity = INIT_CAP_ALLOC_STACK;
   alloc->data = malloc(sizeof(alloc_elem_t) * INIT_CAP_ALLOC_STACK);
